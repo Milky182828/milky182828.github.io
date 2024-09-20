@@ -1,35 +1,88 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Area-12 | Monteract Project</title>
-	<link href='http://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="css/sleek.css">
-</head>
-<body>
-	<div id="player"></div>
-	<div id="overlay"></div>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script type="text/javascript">
+      document.write(
+        '<link rel="stylesheet" href="css/main.css?' + Math.random() + '">'
+      );
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Condensed|Ubuntu+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <title>Загрузка</title>
+  </head>
+  <body>
+    <div class="background"></div>
+    <div class="overhaul"></div>
 
-	<div id="title"></div>
-	<div id="subtitle">
-		Будущее всегда зависит от нас!</span>
-	</div>
+    <nav>
+      <div id="announcement"></div>
+      <span id="map">Карта: </span>
+      <span id="steamid"></span>
+    </nav>
 
-	<div id="status-container">
-		<div id="status">Получении информации о сервере...</div>
-		<div id="loading">
-			<div id="loading-progress"></div>
-		</div>
-		<div id="messages"></div>
-	</div>
+    <div id="debug"></div>
 
-	<div id="music">
-		Сейчас играет:<div id="music-name"></div>
-	</div>
+    <main>
+      <div class="title">
+        <h2></h2>
+        <h1 id="title"></h1>
+        <div id="history"></div>
+      </div>
+      <div class="under-nav"></div>
+      <div class="loading-box"></div>
+      <div id="currently-playing"></div> <!-- Здесь будет отображаться название текущей песни -->
+    </main>
 
-	<script src="js/lib/jquery-2.1.1.min.js"></script>
-	<script src="js/lib/jquery.backstretch.min.js"></script>
-	<script src="js/config.js"></script>
-	<script src="js/sleek.js"></script>
-</body>
+    <!-- Элемент audio для воспроизведения музыки -->
+    <audio id="audio-player" autoplay loop>
+      <source id="audio-source" src="" type="audio/ogg"> <!-- Изменён тип на audio/ogg -->
+      Ошибка музыки.
+    </audio>
+
+    <script src="js/lib/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+      // Массив с именами треков в папке "songs"
+      const tracks = [
+        'songs/come.ogg',  // Замените на .ogg
+        'songs/song.ogg',   // Замените на .ogg
+        'songs/song2.ogg',
+        'songs/song3.ogg',
+        'songs/tesla.ogg',
+        'songs/time.ogg'
+      ];
+
+      let currentTrackIndex = 0;
+      const audioPlayer = document.getElementById('audio-player');
+      const audioSource = document.getElementById('audio-source');
+      const currentlyPlaying = document.getElementById('currently-playing');
+
+      function playTrack(index) {
+        audioSource.src = tracks[index];
+        audioPlayer.load();
+        audioPlayer.play();
+        //currentlyPlaying.textContent = 'Сейчас играет: ' + tracks[index].split('/').pop();
+      }
+
+      // Воспроизведение первой треки при загрузке
+      playTrack(currentTrackIndex);
+
+      // Переход к следующей треке, когда текущая закончится
+      audioPlayer.addEventListener('ended', function() {
+        currentTrackIndex = (currentTrackIndex + 1) % tracks.length; // Зациклить треки
+        playTrack(currentTrackIndex);
+      });
+
+      document.write(
+        '<script src="js/config.js?' + Math.random() + '"><\/script>'
+      );
+      document.write(
+        '<script src="js/main.js?' + Math.random() + '"><\/script>'
+      );
+    </script>
+  </body>
 </html>
